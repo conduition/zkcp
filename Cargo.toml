@@ -1,0 +1,39 @@
+[package]
+name = "zkcp"
+version = "0.0.1"
+edition = "2021"
+authors = ["conduition <conduition@proton.me>"]
+description = "Zero-knowledge contingent payments with zk-STARKS"
+readme = "README.md"
+license = "Unlicense"
+repository = "https://github.com/conduition/zkcp"
+keywords = ["zk", "starks", "bitcoin", "ptlc", "zkcp"]
+include = ["/src", "/zkvm", "/build.rs", "*.md"]
+
+[dependencies]
+common = { path = "./zkvm/common" }
+risc0-zkvm = { version = "1.1", features = ["prove"] }
+risc0-zkp = { version = "1.1", default-features = false }
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+anyhow = { version = "1.0" }
+borsh = { version = "1.5", features = ["derive"] }
+secp = { version = "0.4", features = ["serde"] }
+chacha20 = { version = "0.9" }
+
+[dev-dependencies]
+hex = "0.4.3"
+
+[build-dependencies]
+risc0-build = { version = "1.1.2" }
+sha2 = "0.10.8"
+
+[package.metadata.risc0]
+methods = ["zkvm/dlog_secp256k1_sha256", "zkvm/dlog_secp256k1_sudoku", "zkvm/sha256_sudoku"]
+
+# Always optimize; building and running the guest takes much longer without optimization.
+[profile.dev]
+opt-level = 3
+
+[profile.release]
+debug = 1
+lto = true
