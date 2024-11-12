@@ -62,7 +62,6 @@ fn main() -> io::Result<()> {
 
     fingerprint_files_recursive(&crate_dir.join("zkvm"), &mut hasher, &mut buf)?;
     fingerprint_files_recursive(&crate_dir.join("Cargo.toml"), &mut hasher, &mut buf)?;
-    fingerprint_files_recursive(&crate_dir.join("Cargo.lock"), &mut hasher, &mut buf)?;
     fingerprint_files_recursive(&crate_dir.join("build.rs"), &mut hasher, &mut buf)?;
 
     let fingerprint: [u8; 32] = hasher.finalize().into();
