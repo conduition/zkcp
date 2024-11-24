@@ -94,17 +94,25 @@ impl Sha256SudokuProof {
             bail!("preimage does not match hash in proof journal");
         }
 
-        let chacha_nonce = <[u8; 12]>::try_from(&self.journal()[32..][..12])?;
-        let mut compact_solution = CompactSudokuBoard::try_from(&self.journal()[32..][12..][81..])?;
+        let chacha_nonce =
+            <[u8; 12]>::try_from(&self.journal()[32..][..12]).expect("always correct length");
+        let mut compact_solution = CompactSudokuBoard::try_from(&self.journal()[32..][12..][81..])
+            .expect("always correct length");
 
         let mut cipher = ChaCha20::new(&preimage.into(), &chacha_nonce.into());
         cipher.apply_keystream(&mut compact_solution);
         let solution = sudoku::decompress_board(&compact_solution)?;
 
         if !sudoku::is_valid_sudoku_solution(&solution) {
-            bail!("decrypted solution is not valid; this should never happen");
+            bail!(
+                "decrypted solution is not valid. This should never happen; \
+                   did you forget to verify the proof?"
+            );
         } else if !sudoku::solves_sudoku_puzzle(&solution, &self.puzzle()) {
-            bail!("decrypted solution is for the wrong puzzle; this should never happen");
+            bail!(
+                "decrypted solution is for the wrong puzzle. This should never happen; \
+                   did you forget to verify the proof?"
+            );
         }
         Ok(solution)
     }
