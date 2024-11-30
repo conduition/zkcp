@@ -12,9 +12,6 @@ use crate::program::Program;
 #[derive(
     Clone,
     Debug,
-    Eq,
-    PartialEq,
-    Hash,
     serde::Serialize,
     serde::Deserialize,
     borsh::BorshSerialize,
