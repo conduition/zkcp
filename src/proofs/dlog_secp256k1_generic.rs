@@ -24,7 +24,7 @@ fn compute_challenge(id: [u32; 8], public_nonce: Point, public_key: Point) -> Ma
 /// A generic proof that a secp256k1 discrete log (secret key) exhibits some custom properties.
 ///
 /// Generally this type is used to instantiate more application-specific proofs.
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, serde::Serialize, serde::Deserialize)]
 pub struct Secp256k1DlogProof<P: Program> {
     pub public_key: Point,
     pub public_nonce: Point,

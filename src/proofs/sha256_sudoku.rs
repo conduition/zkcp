@@ -30,6 +30,7 @@ use common::sudoku::{self, CompactSudokuBoard, SudokuBoard};
 /// - `compact_encrypted_solution = chacha_cipher(preimage).encrypt(compress_board(sudoku_solution))` (36 bytes)
 ///
 /// This program is used to instantiate [`Sha256SudokuProof`].
+#[derive(Copy, Debug, Clone, Eq, PartialEq, Hash)]
 pub struct Sha256SudokuProgram;
 
 impl Program for Sha256SudokuProgram {

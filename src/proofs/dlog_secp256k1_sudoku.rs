@@ -34,6 +34,7 @@ use common::sudoku::{self, CompactSudokuBoard, SudokuBoard};
 /// - `compact_encrypted_solution = chacha_cipher(secret_key).encrypt(compress_board(sudoku_solution))` (36 bytes)
 ///
 /// This program is used to instantiate [`Secp256k1DlogSudokuProof`].
+#[derive(Copy, Debug, Clone, Eq, PartialEq, Hash)]
 pub struct Secp256k1DlogSudokuProgram;
 
 impl Program for Secp256k1DlogSudokuProgram {

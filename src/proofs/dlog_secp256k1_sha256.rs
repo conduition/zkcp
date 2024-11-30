@@ -18,6 +18,7 @@ use crate::program::Program;
 /// - `hash = sha256(secret_key)` (32 bytes)
 ///
 /// This program is used to instantiate [`Secp256k1DlogSha256Proof`].
+#[derive(Copy, Debug, Clone, Eq, PartialEq, Hash)]
 pub struct Secp256k1DlogSha256Program;
 
 impl Program for Secp256k1DlogSha256Program {
